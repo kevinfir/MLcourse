@@ -27,16 +27,16 @@ def sidebar_func(data):
         st.write("選擇要預測的資料")
         selection = st.selectbox("選擇資料", ["體重(公斤)", "坐姿體前彎(公分)", "立定跳遠(公分)", "仰臥起坐(下)"])
     if selection == "體重(公斤)":
-        weight = pd.DataFrame(weight)
+        
         return weight
     elif selection == "坐姿體前彎(公分)":
-        binding = pd.DataFrame(binding)
+       
         return binding
     elif selection == "立定跳遠(公分)":
-        jumping = pd.DataFrame(jumping)
+        
         return jumping
     else:  
-        situps = pd.DataFrame(situps)
+        
         return situps
 data = get_data()
 value = sidebar_func(data)
@@ -58,6 +58,7 @@ y_pred = model.predict(x_range)
 ax.plot(x_range, y_pred, color='red', label=f'Regression line: y = {slope:.2f}x + {intercept:.2f}')
 plt.scatter(x, y, color='blue', label='Data points')
 ax.set_xlabel("height(cm)")
+value = pd.DataFrame(value)
 ax.set_ylabel(value.columns[0])
 ax.set_title('Simple Linear Regression with scikit-learn')
 ax.legend()
