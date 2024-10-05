@@ -15,7 +15,6 @@ st.text("我們把它繪製成以下的圖表就一目了然了")
 
 def get_data():
     data = pd.read_excel("regression_data.xlsx")
-    data = data.reset_index(drop=True)
     return data
 
 def sidebar_func(data):
@@ -28,21 +27,27 @@ def sidebar_func(data):
         st.write("選擇要預測的資料")
         selection = st.selectbox("選擇資料", ["體重(公斤)", "坐姿體前彎(公分)", "立定跳遠(公分)", "仰臥起坐(下)"])
     if selection == "體重(公斤)":
+        weight = pd.DataFrame(weight)
         return weight
     elif selection == "坐姿體前彎(公分)":
+        binding = pd.DataFrame(binding)
         return binding
     elif selection == "立定跳遠(公分)":
+        jumping = pd.DataFrame(jumping)
         return jumping
     else:  
+        situps = pd.DataFrame(situps)
         return situps
 data = get_data()
-st.table(data)
+value = sidebar_func(data)
 
-y = sidebar_func(data)
+
+
+
 
 x= data["height(cm)"]
 x = pd.to_numeric(x)
-y = pd.to_numeric(y)
+y = pd.to_numeric(value)
 x = x.values.reshape(-1, 1)
 model = LinearRegression()
 model.fit(x, y)
@@ -54,7 +59,7 @@ y_pred = model.predict(x_range)
 ax.plot(x_range, y_pred, color='red', label=f'Regression line: y = {slope:.2f}x + {intercept:.2f}')
 plt.scatter(x, y, color='blue', label='Data points')
 ax.set_xlabel("height(cm)")
-ax.set_ylabel(y.iloc[0])
+ax.set_ylabel(value.columns[0])
 ax.set_title('Simple Linear Regression with scikit-learn')
 ax.legend()
 
