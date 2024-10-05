@@ -46,8 +46,7 @@ value = sidebar_func(data)
 
 
 x= data["height(cm)"]
-x = pd.to_numeric(x)
-y = pd.to_numeric(value)
+y = value
 x = x.values.reshape(-1, 1)
 model = LinearRegression()
 model.fit(x, y)
