@@ -40,7 +40,7 @@ st.table(data)
 
 y = sidebar_func(data)
 
-x= data["身高(公分)"]
+x= data["height(cm)"]
 x = pd.to_numeric(x)
 y = pd.to_numeric(y)
 x = x.values.reshape(-1, 1)
