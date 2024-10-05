@@ -1,0 +1,5 @@
+streamlit
+numpy
+matplotlib.pyplot
+sklearn.linear_model
+pandas
