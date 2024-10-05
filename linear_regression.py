@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 st.title("Linear Regression")
 st.header("What is Linear Regression?什麼是線性迴歸?")
-st.text("還記得函數(function)的形式: y = mx + b或y= ax + b")
+st.text("還記得函數(function)的形式")
+st.text("y = mx + b或y= ax + b")
 st.text("這都不重要")
 st.text("重要的是本身是用一個已知的值推估未知的值")
 st.text("神奇的來了!怎麼這樣可以預測呢?")
@@ -39,6 +40,7 @@ def sidebar_func(data):
         
         return situps
 data = get_data()
+st.table(data)
 value = sidebar_func(data)
 
 
