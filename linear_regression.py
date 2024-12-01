@@ -78,6 +78,37 @@ def sidebar_func(data):
     else:  
         
         return situps
+    
+
+lifesat = pd.read_csv("lifesat.csv")
+x = lifesat[["GDP per capita (USD)"]].values.reshape(-1, 1)
+y = lifesat[["Life satisfaction"]].values
+
+fig, ax = plt.subplots()
+lifesat.plot(kind='scatter', x="GDP per capita (USD)", y='Life satisfaction', title='Life Satisfaction vs. GDP per Capita', ax=ax)
+ax.axis([23_500, 62_500, 4, 9])
+
+
+model = LinearRegression()
+model.fit(x, y)
+slope = model.coef_[0][0]
+intercept = model.intercept_[0]
+x_range = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
+y_pred = model.predict(x_range)
+ax.plot(x_range, y_pred, color='red', label=f'Regression line: y = {slope:.2f}x + {intercept:.2f}')
+plt.scatter(x, y, color='blue', label='Data points')
+y_pred_original = model.predict(x)
+for i in range(len(x)):
+    ax.plot([x[i], x[i]], [y[i], y_pred_original[i]], color='green', linestyle='--', linewidth=0.8)
+ax.legend()
+st.pyplot(fig, dpi=300)
+text = st.text_input("輸入GDP per capita (USD)的值")
+
+if text:
+    text = float(text)
+    result = model.predict([[text]])[0][0]
+    st.write(f"Life satisfaction: {result:.2f}")
+
 data = get_data()
 st.table(data)
 value = sidebar_func(data)
@@ -109,3 +140,5 @@ ax.legend()
 
 # 在 Streamlit 中显示图形
 st.pyplot(fig, dpi=300)
+
+
