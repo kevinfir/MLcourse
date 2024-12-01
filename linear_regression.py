@@ -113,7 +113,7 @@ slope = model.coef_[0][0]
 intercept = model.intercept_[0]
 x_range = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
 y_pred = model.predict(x_range)
-ax.plot(x_range, y_pred, color='red', label=f'Regression line: y = {slope:.2f}x + {intercept:.2f}')
+ax.plot(x_range, y_pred, color='red', label=f'Regression line: y = {slope}x + {intercept:.2f}')
 plt.scatter(x, y, color='blue', label='Data points')
 y_pred_original = model.predict(x)
 for i in range(len(x)):
