@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.neighbors import KNeighborsRegressor
 st.title("機器學習是一門科學，其目的是賦予計算機學習能力，且不需要明確的編寫程式")
 st.header("機器學習系統進行學習做出決策的部分稱為模型")
 st.text("模型是一個數學函數，它將輸入映射到輸出")
@@ -83,7 +84,24 @@ def sidebar_func(data):
 lifesat = pd.read_csv("lifesat.csv")
 x = lifesat[["GDP per capita (USD)"]].values.reshape(-1, 1)
 y = lifesat[["Life satisfaction"]].values
+knn = KNeighborsRegressor(n_neighbors=3)
+knn.fit(x, y)
 
+# Predict values
+x_range = np.linspace(x.min(), x.max(), 100).reshape(-1, 1)
+y_pred = knn.predict(x_range)
+
+# Plot results
+fig, ax = plt.subplots()
+ax.scatter(x, y, color='blue', label='Data points')
+ax.plot(x_range, y_pred, color='red', label='KNN regression')
+ax.legend()
+ax.set_xlabel("GDP per capita (USD)")
+ax.set_ylabel("Life satisfaction")
+ax.set_title("KNN Regression: Life Satisfaction vs. GDP per Capita")
+
+# Display plot in Streamlit
+st.pyplot(fig)
 fig, ax = plt.subplots()
 lifesat.plot(kind='scatter', x="GDP per capita (USD)", y='Life satisfaction', title='Life Satisfaction vs. GDP per Capita', ax=ax)
 ax.axis([23_500, 62_500, 4, 9])
